@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Contoh Script Error HTML</title>
+</head>
+<body>
+  <h2>Demo Error Fetch Data</h2>
+  <p id="status">Mengambil data dari server...</p>
+  <p id="error" style="color:red; font-weight:bold;"></p>
+
+  <script>
+    async function ambilData() {
+      try {
+        // URL palsu untuk memicu error
+        let response = await fetch("https://domain-yang-tidak-ada.com/data.json");
+        
+        if (!response.ok) {
+          throw new Error("Gagal mengambil data: " + response.status);
+        }
+
+        let data = await response.json();
+        document.getElementById("status").innerText = "Data berhasil diambil!";
+        console.log(data);
+
+      } catch (err) {
+        document.getElementById("error").innerText = "Terjadi error: " + err.message;
+        console.error("Detail error:", err);
+      } finally {
+        document.getElementById("status").innerText = "Proses selesai (terjadi error).";
+      }
+    }
+
+    ambilData();
+  </script>
+</body>
+</html>
